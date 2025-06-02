@@ -1,21 +1,25 @@
 server:
-  port: 0
+  port: 4040
 
 spring:
   application:
     name: api-gateway
 
   cloud:
-    config:
-      uri: http://localhost:8888
-
     gateway:
-      server:
-        webflux:
-          discovery:
-            locator:
-              enabled: true
-              lower-case-service-id: true
+      routes:
+
+        # Ruta al natural-service
+        - id: natural-service
+          uri: lb://NATURAL-SERVICE
+          predicates:
+            - Path=/api/natural/**
+
+        # Ruta al report-service
+        - id: report-service
+          uri: lb://REPORT-SERVICE
+          predicates:
+            - Path=/api/report/**
 
 eureka:
   client:
