@@ -15,17 +15,6 @@ spring:
           enabled: true
           lower-case-service-id: true
 
-      routes:
-        - id: natural-service
-          uri: lb://NATURAL-SERVICE
-          predicates:
-            - Path=/api/productos/**, /api/categorias/**, /api/origenes/**, /api/usos/**
-
-        - id: report-service
-          uri: lb://REPORT-SERVICE
-          predicates:
-            - Path=/api/reportes/**
-
 eureka:
   client:
     service-url:
