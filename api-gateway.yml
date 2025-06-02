@@ -1,0 +1,32 @@
+server:
+  port: 4040
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    config:
+      uri: http://localhost:8888
+
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+      routes:
+        - id: natural-service
+          uri: lb://NATURAL-SERVICE
+          predicates:
+            - Path=/api/productos/**, /api/categorias/**, /api/origenes/**, /api/usos/**
+
+        - id: report-service
+          uri: lb://REPORT-SERVICE
+          predicates:
+            - Path=/api/reportes/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
